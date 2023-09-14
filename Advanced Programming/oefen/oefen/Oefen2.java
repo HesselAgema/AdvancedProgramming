@@ -35,12 +35,18 @@ PrintStream out;
 		
 		int[] numbers = new int[5];
 		int counter = 0;
-		while(in.hasNextInt() && counter <4) {
-			int num = in.nextInt();
-			out.printf("Number = %d with counter %d\n", num, counter);
-			numbers[counter] = num;
+		
+		while(in.hasNext() && counter <5) {
+			int numbers2 = in.nextInt();
+			System.out.printf("Number = %d with counter = %d\n", numbers2, counter);
 			counter++;
+			//System.out.printf("Number = %d with counter = %d\n", numbers2, counter);
+
+
 		}
+		
+		
+		
 	}
 
 	public static void main(String[] argv) {
