@@ -9,7 +9,9 @@ public class Yachtzee implements Combination {
 	
 	@Override
 	public int getScore(int a, int b, int c, int d, int e) {
-		//write code to determine score
+		if(a == b && b == c && c == d && d == e) {
+			return 50;
+		}
 		return 0;
 	}
 	

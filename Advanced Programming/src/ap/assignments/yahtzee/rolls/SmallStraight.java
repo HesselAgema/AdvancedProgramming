@@ -11,26 +11,23 @@ public class SmallStraight implements Combination {
 	public int getScore(int a, int b, int c, int d, int e) {
 
 		int[] roll = {a,b,c,d,e};
-		// of 6,5,4,3,3
-		// of 6,4,3,2,1
-		// of 6,5,5,4,3
 		
 		int count = 1;
 		for(int i = 1; i < roll.length; i++) {
 			if(roll[i] == roll[i-1] -1) {
-				// if roll is last -1 so consecutive
+				// if dice i is 1 bigger than i-1, (starting from 2nd dice) 
 				count++;
 				
 			}else if (roll[i] != roll[i - 1]) {
-				// if roll is not consecutive and also not the same , so 2 or more lower
+				// if roll is NOT the same as previous, then we reset count to one. (because roll can also be 5 <4> <4> 2 1)
+				// then if 4 is same as 4, we don't want to reset count to one. just if they are not consecutive nor the same.
 				count = 1;
 			}
 			
 			if(count == 4) {
-				return 25;
+				return 30;
 			}
 		}
-		System.out.printf("%d\n", count);
 		return 0;
 	}
 }
