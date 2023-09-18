@@ -11,7 +11,7 @@ public interface Map<K, V> {
 	
 	boolean contains(K key);
 	
-	//void keys(K key);
+	//keys(K key);
 	
 	
 	

@@ -18,42 +18,58 @@ public class MapImplementation<K,V> implements Map<K,V> {
 	}
 	
 	public MapImplementation() {
-		pairs = new ArrayList<Pair>();
+		pairs = new ArrayList<Pair>(); // pair niet nodig maar wel handig om te lezen voor nu
 	}
 
 	@Override
 	public void add(K key, V value) {
 		Pair newPair = new Pair(key,value);
 
-		if(pairs.size() == 0) {
-			pairs.add(0,newPair);
-		}else {
-			
+
+		for(int i = 0; i < pairs.size() ; i++) {
+			Pair currentPair = pairs.get(i);
+			if(currentPair.key.equals(newPair.key)) { 		// we gebruiken .equals omdat bij Integers == fout kan gaan kennelijk 
+				currentPair.value = value;
+				return;
+			}
 		}
+		
+		pairs.add(newPair);
 	}
 
 	@Override
 	public V get(K key) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < pairs.size(); i++) {
+			Pair currentPair = pairs.get(i);
+			if(currentPair.key.equals(key)) {
+				return currentPair.value;
+			}
+		}
 		return null;
 	}
 	
 
 	@Override
 	public void remove(K key) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < pairs.size(); i++) {
+			Pair currentPair = pairs.get(i);
+			if(currentPair.key.equals(key)) {
+				pairs.remove(i);
+			}
+		}
 		
 	}
 
 	@Override
 	public boolean contains(K key) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return pairs.contains(key);
 	}
 
 //	@Override
 //	public void keys(K key) {
-//		// TODO Auto-generated method stub
+//		
+//		
 //		
 //	}
 

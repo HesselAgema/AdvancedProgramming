@@ -15,6 +15,11 @@ public class Main {
 		Room room3 = new Room(30.00, false, "Okay Room");
 		roomMap.add(103, room3);
 		
+		Room room4 = new Room(20.00, false, "Okay Room");
+		roomMap.add(104, room4);
+		
+		
+		
 	}
 
 }

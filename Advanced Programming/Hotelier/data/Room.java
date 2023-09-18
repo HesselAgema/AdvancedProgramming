@@ -13,7 +13,17 @@ public class Room {
 		
 	}
 	
+	public double getPrice() {
+		return price;
+	}
 	
+	public boolean getOccupancy() {
+		return occupied;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
 	
 	
 	
