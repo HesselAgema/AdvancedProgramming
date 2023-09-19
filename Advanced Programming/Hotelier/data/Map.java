@@ -1,5 +1,7 @@
 package data;
 
+import java.util.ArrayList;
+
 public interface Map<K, V> {
 
 	
@@ -11,7 +13,9 @@ public interface Map<K, V> {
 	
 	boolean contains(K key);
 	
-	//keys(K key);
+	int size();
+	
+	//ArrayList<K>keys;
 	
 	
 	

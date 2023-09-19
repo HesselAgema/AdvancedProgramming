@@ -3,13 +3,15 @@ package data;
 public class Room {
 
 	private double price;
-	private boolean occupied;
+	private boolean occupancy;
 	private String description;
+	private String person;
 	
 	public Room(double price, boolean occupied, String description) {
 		this.price = price;
-		this.occupied = occupied;
+		this.occupancy = occupied;
 		this.description = description;
+		this.person = null;
 		
 	}
 	
@@ -18,13 +20,26 @@ public class Room {
 	}
 	
 	public boolean getOccupancy() {
-		return occupied;
+		return occupancy;
 	}
 	
 	public String getDescription() {
 		return description;
 	}
 	
+	public String getPerson() {
+		return person;
+	}
+	public void setPerson(String name) {
+		this.person = name;
+	}
 	
+	public void setOccupancy(boolean occupancy) {
+		if(occupancy) {
+			this.occupancy = true;
+		}else {	
+			this.occupancy = false;
+		}
+	}
 	
 }

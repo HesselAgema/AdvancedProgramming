@@ -66,6 +66,12 @@ public class MapImplementation<K,V> implements Map<K,V> {
 		return pairs.contains(key);
 	}
 
+	@Override
+	public int size() {
+		
+		return pairs.size();
+	}
+
 //	@Override
 //	public void keys(K key) {
 //		
