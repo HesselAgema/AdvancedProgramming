@@ -15,7 +15,7 @@ public interface Map<K, V> {
 	
 	int size();
 	
-	//ArrayList<K>keys;
+	ArrayList<K> getKeys();
 	
 	
 	

@@ -62,8 +62,12 @@ public class MapImplementation<K,V> implements Map<K,V> {
 
 	@Override
 	public boolean contains(K key) {
-		
-		return pairs.contains(key);
+	    for(int i = 0 ; i < pairs.size(); i++) {
+	    	if(pairs.get(i).key == key) {
+	    		return true;
+	    	}
+	    }
+	    return false;
 	}
 
 	@Override
@@ -72,12 +76,16 @@ public class MapImplementation<K,V> implements Map<K,V> {
 		return pairs.size();
 	}
 
-//	@Override
-//	public void keys(K key) {
-//		
-//		
-//		
-//	}
+	@Override
+	public ArrayList<K> getKeys() {
+		ArrayList<K> keys = new ArrayList<K>();
+		for(int i = 0 ; i < pairs.size(); i++) {
+			keys.add(pairs.get(i).key);
+			
+		}
+		return keys;
+		
+	}
 
 
 }

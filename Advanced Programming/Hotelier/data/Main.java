@@ -4,39 +4,44 @@ import java.util.Scanner;
 
 public class Main {
 
-
 	//RoomManager Room;
 	public static void main(String[] args) {
 		Map<Integer, Room> roomMap = new MapImplementation<>();
 
 		//RoomManager Room = new RoomManager(roomMap);
 
-		Room room1 = new Room(50.00, false, "Nice Room!");
+		Room room1 = new Room(50.00, false, "Nice First room, beachview");
 		roomMap.add(101, room1);
 		
 		
-		Room room2 = new Room(40.00, false, "Fine Room");
+		Room room2 = new Room(40.00, false, "Fine Second room, cityview");
 		roomMap.add(102, room2);
 		
-		Room room3 = new Room(30.00, false, "Okay Room");
+		Room room3 = new Room(30.00, false, "Okay Third room, garbageview");
 		roomMap.add(103, room3);
 		
-		Room room4 = new Room(20.00, false, "Okay Room");
+		Room room4 = new Room(20.00, false, "Okay Fourth room, no view");
 		roomMap.add(104, room4);
 		
+		boolean runTillExit = true;
+		while(runTillExit) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("Enter a command");
+		System.out.println("\nEnter a command\n");
 		Scanner lineScanner = new Scanner(in.nextLine());
 		String command = lineScanner.nextLine();
 		boolean wrongInput = true;
-		System.out.println("What room you want to check in?");
 
 		switch(command) {
+		
 		case("checkin"):
+			System.out.println("What room you want to check in?");
+
 			while(wrongInput) {
+
 				String number = in.next();	
 				try{
 					checkin(number, roomMap);
+					break;
 					//wrongInput = false;
 				}catch( Exception e) {
 					System.out.println(e.getMessage() + " Enter new room number");
@@ -46,21 +51,70 @@ public class Main {
 			break;
 		case("view"):
 			System.out.println("What room you want to view?");
+			String number = in.next();
+			try {
+				viewRoom(number, roomMap);
+				break;
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
 			break;
 		case("checkout"):
 			System.out.println("what room you want to check out");
 			break;
 		case("list"):
 			System.out.println("here is the list!");
+			list(roomMap);
+		
 			break;
 		case("exit"):
 			System.out.println("Have a nice day");
+			runTillExit = false;
 			break;
+		}
+		
+		}
+	}
+	
+	private static void list(Map<Integer, Room> roomMap) {
+		
+		// change get all keys to return integer
+		// loop over that integer array which has room numbers to go
+		// over Room objects and print their
+		// price, description, occupancy, person if occupied. and number ofcourse.
+		
+	}
+
+	private static void viewRoom(String number, Map<Integer, Room> roomMap) throws Exception {
+		
+		int num= 0;
+		try {
+			num = Integer.parseInt(number);
+			
+		}catch (Exception e) {
+			throw new Exception("Number was not an integer");
+		}
+		
+		System.out.printf("Num = %d\n", num);
+		if(roomMap.contains(num)) {
+			Room room = roomMap.get(num);
+			String desc = room.getDescription();
+			String person = room.getPerson();
+			System.out.println(room.getDescription() + " With price " + room.getPrice());
+			if(room.getOccupancy()) {
+				System.out.printf("Person %s is staying in room %d\n", person, num);
+			}else {
+				System.out.printf("No one is staying in room", person); System.out.printf(" %d \n", num);
+			}
+			
+			
+		}else {
+			throw new Exception("Room number not found");
 		}
 		
 		
 	}
-	
+
 	public static void checkin(String number, Map<Integer, Room> roomMap) throws Exception {
 		int num= 0;
 		try {
