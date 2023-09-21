@@ -26,7 +26,7 @@ public class Main {
 		boolean runTillExit = true;
 		while(runTillExit) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("\nEnter a command\n");
+		System.out.println("Enter a command");
 		Scanner lineScanner = new Scanner(in.nextLine());
 		String command = lineScanner.nextLine();
 		boolean wrongInput = true;
@@ -61,7 +61,14 @@ public class Main {
 			break;
 		case("checkout"):
 			System.out.println("what room you want to check out");
+		String number2 = in.next();
+		try {
+			checkout(number2, roomMap);
 			break;
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		break;
 		case("list"):
 			System.out.println("here is the list!");
 			list(roomMap);
@@ -76,8 +83,38 @@ public class Main {
 		}
 	}
 	
+	private static void checkout(String number2, Map<Integer, Room> roomMap) throws Exception {
+		int num= 0;
+		try {
+			num = Integer.parseInt(number2);
+			
+		}catch (Exception e) {
+			throw new Exception("Number was not an integer");
+		}
+		
+		Room roomToCheckOut = roomMap.get(num);
+		if(roomToCheckOut.getOccupancy() == false) {
+			throw new Exception("Error: Room is empty");
+		}else {
+			roomToCheckOut.setOccupancy(false);
+			//String person = roomToCheckOut.getPerson();
+			System.out.printf("Person %s has been checked out of room %d\n", roomToCheckOut.getPerson(), num);
+		}
+		
+	}
+
 	private static void list(Map<Integer, Room> roomMap) {
 		
+		//Room testroom = roomMap.get(101);
+		//testroom.printInfo();
+		
+		LinkedList<Integer> keys = roomMap.getKeys(); 
+		for(int i = 0 ; i < keys.size(); i++) {
+			int roomNumber = keys.get(i);
+			Room room = roomMap.get(roomNumber);
+			//System.out.println(keys.get(i));
+			room.printInfo(roomNumber);
+		}
 		// change get all keys to return integer
 		// loop over that integer array which has room numbers to go
 		// over Room objects and print their
@@ -98,16 +135,8 @@ public class Main {
 		System.out.printf("Num = %d\n", num);
 		if(roomMap.contains(num)) {
 			Room room = roomMap.get(num);
-			String desc = room.getDescription();
-			String person = room.getPerson();
-			System.out.println(room.getDescription() + " With price " + room.getPrice());
-			if(room.getOccupancy()) {
-				System.out.printf("Person %s is staying in room %d\n", person, num);
-			}else {
-				System.out.printf("No one is staying in room", person); System.out.printf(" %d \n", num);
-			}
-			
-			
+			room.printInfo(num);
+				
 		}else {
 			throw new Exception("Room number not found");
 		}
@@ -123,12 +152,12 @@ public class Main {
 		}catch (Exception e) {
 			throw new Exception("Number was not an integer");
 		}
-		//System.out.println("Enter guest name");
-		//Scanner in = new Scanner(System.in);
-		//Scanner nameScanner = new Scanner(in.nextLine());
-		//String name = nameScanner.next();
+		System.out.println("Enter guest name");
+		Scanner in = new Scanner(System.in);
+		Scanner nameScanner = new Scanner(in.nextLine());
+		String name = nameScanner.next();
 		//in.close();
-		String name = "Hessel";
+		//String name = "Hessel";
 		System.out.printf("num = %d\n", num);
 		
 		
@@ -139,6 +168,7 @@ public class Main {
 			if(!(roomMap.get(num).getOccupancy())){
 				roomMap.get(num).setOccupancy(true);
 				roomMap.get(num).setPerson(name);
+				System.out.println("checkin in");
 			}else {
 				throw new Exception("Room is occupied");
 			}
