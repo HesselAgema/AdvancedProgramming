@@ -1,7 +1,5 @@
 package data;
 
-import java.util.ArrayList;
-
 public interface Map<K, V> {
 
 	
@@ -15,7 +13,7 @@ public interface Map<K, V> {
 	
 	int size();
 	
-	ArrayList<K> getKeys();
+	LinkedList<K> getKeys();
 	
 	
 	
