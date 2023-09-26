@@ -14,7 +14,6 @@ public interface Map<K, V> {
 	int size();
 	
 	LinkedList<K> getKeys();
-//	int[] getKeys();
 	
 	
 }
