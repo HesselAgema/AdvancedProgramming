@@ -44,11 +44,9 @@ public class Room {
 	
 	public void printInfo(int i) {
 		if((!this.occupancy)) {
-			//System.out.printf("The price of room %d = %s, %s, the room is occupied by Mr/Ms %s\n",i, this.price, this.description, this.person);
-			System.out.printf("Room %d \t price = %s \t %s, the room is free\n" , i , this.price, this.description);
+			System.out.printf("Room %d \t price = %s \t %s, \t free\n" , i , this.price, this.description);
 		}else {
-			//System.out.printf("The price of room %d = %s, %s, The room is free\n",i, this.price, this.description);
-			System.out.printf("Room %d \t price = %s \t %s, the room is occupied by Mr/Ms %s\n" , i , this.price, this.description, this.person);
+			System.out.printf("Room %d \t price = %s \t %s, \toccupied \t Mr/Ms %s\n" , i , this.price, this.description, this.person);
 
 		}
 	}

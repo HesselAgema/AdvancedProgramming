@@ -61,7 +61,7 @@ public class MapImplementation<K,V> implements Map<K,V> {
 	@Override
 	public boolean contains(K key) {
 	    for(int i = 0 ; i < pairs.size(); i++) {
-	    	if(pairs.get(i).key == key) {
+	    	if(pairs.get(i).key.equals(key)) {
 	    		return true;
 	    	}
 	    }
