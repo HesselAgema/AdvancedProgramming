@@ -85,10 +85,4 @@ public class MapImplementation<K,V> implements Map<K,V> {
 		return keys;
 		
 	}
-
-//	@Override
-//	public int[] getKeys() {
-//		int [] a;
-//		return a;
-//	}
 }
