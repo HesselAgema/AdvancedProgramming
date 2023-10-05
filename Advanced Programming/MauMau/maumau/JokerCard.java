@@ -8,7 +8,7 @@ public class JokerCard implements PlayingCard {
 	}
 	
 	@Override
-	public boolean playable(PlayingCard lastCard) {
+	public boolean playable(PlayingCard kaartOpSpel) {
 		return true;
 	}
 	

@@ -1,5 +1,7 @@
 package maumau;
 
+import maumau.FrenchCards.Rank;
+
 public class FrenchCards implements PlayingCard {
 
 	Card card;
@@ -37,20 +39,50 @@ public class FrenchCards implements PlayingCard {
 		}
 	}
 	
-	public FrenchCards(Suit suit, Rank rank) {
+	public FrenchCards(Suit suit, Rank rank) {	
 		card = new Card(suit,rank);
 	}
 	
 	@Override
-	public boolean playable(PlayingCard lastCard) {
-		if(lastCard instanceof FrenchCards) {
-			FrenchCards fCard = (FrenchCards) lastCard;
-			if(card.suit.toString().equals(((FrenchCards) lastCard).getSuit())) {
-				
+	public boolean playable(PlayingCard cardOnDeck) {
+
+		if (cardOnDeck instanceof JokerCard) {
+			return true;
+		} else {
+			FrenchCards kaartOpSpel = (FrenchCards) cardOnDeck;
+
+			// check if suit are the same.
+			if (kaartOpSpel.getSuit().equals(card.suit.toString())) {
+				if (kaartOpSpel.getRank().equals(Rank.JACK) || card.rank.toString().equals(Rank.JACK)) {
+					// one of the two cards is a jack. and they are both of the same Suit. so not
+					// allowed
+					return false;
+				} else {
+					// both are not jacks. so card can be played on starting card which has the same
+					// suit.
+					return true;
+				}
+
+			} else if (kaartOpSpel.getRank().equals(card.rank.toString())) {
+				// if cards are the same rank, they can be played on each other so we return
+				// true;
+				return true;
+			} else if (kaartOpSpel.getRank().equals(Rank.JACK)
+					&& (!(kaartOpSpel.getSuit().equals(card.suit.toString())))) {
+				// if starting card is a jack, and our card is not the suit of the jack, we
+				// return true;
+				return true;
+			} else if (card.rank.toString().equals(Rank.JACK)
+					&& (!(kaartOpSpel.getSuit().equals(card.suit.toString())))) {
+				// if card in hand is a jack and not of the same suit. we can play it
+				return true;
+
 			}
+
+			return false;
+
 		}
-		
-		return false;
+
 	}
 
 	public String getSuit() {

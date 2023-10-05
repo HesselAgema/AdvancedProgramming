@@ -15,105 +15,66 @@ public class Main {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		
-		createDeck();
-		shuffleDeck();
-		//printDeck(cards);
-		System.out.println("Size of deck : "+ cards.size());
-		System.out.println("dealing to players");
-		dealToPlayers(3);
-		System.out.println("Size of deck : "+ cards.size());
+		int numSims = 10000;
+		int numberOfSucces = 0;
+		for(int i = 0 ; i < numSims ; i++) {
+			createDeck();
+			//System.out.println("Size of deck : "+ cards.size());
 
-		//printDeck(cards);
+			shuffleDeck();
+			//printDeck(cards);
+			//System.out.println("dealing to players");
+			dealToPlayers(3);
+			//System.out.println("Size of deck : "+ cards.size());
 
-		System.out.println("printing hand");
-		printDeck(hand);
-		
-		PlayingCard startCard = getFirstCard();
-		
-		
 
-		boolean ableToMove = AbleToMove(startCard);
-		System.out.println(ableToMove);
-		
-		
-		
-		
-		
-		//cards = new ArrayList<PlayingCard>();
-		if(startCard instanceof FrenchCards) {
-			FrenchCards fStartCard = (FrenchCards) startCard;
-			System.out.printf("First card is : %s \t %s", fStartCard.getSuit(), fStartCard.getRank());
-		}else {
-			System.out.println("JOKER is the first card!!!");
+			//printDeck(hand);
+			
+			PlayingCard startCard = getFirstCard();
+			//printFirstCard(startCard);
+
+			boolean ableToMove = AbleToMove(startCard);
+			if(ableToMove) {
+				numberOfSucces++;
+			}
+			//System.out.println(ableToMove);
+			//System.out.println("\n\n");
 		}
 		
+		System.out.println(numberOfSucces);
+		double percentCannot = (numSims - numberOfSucces);
+		System.out.printf("%.3f percent \n", (percentCannot/numSims)*100);
+		
+		
+		
 
+	}
+
+	private static void printFirstCard(PlayingCard startCard) {
+		if(startCard instanceof FrenchCards) {
+			FrenchCards fStartCard = (FrenchCards) startCard;
+			System.out.printf("First card is : %s \t %s\n", fStartCard.getSuit(), fStartCard.getRank());
+		}else {
+			System.out.println("JOKER is the first card!!!");
+		}		
 	}
 
 	private static boolean AbleToMove(PlayingCard startCard) {
-
-		if (startCard instanceof JokerCard) {
-			return true;
-		} else {
-			FrenchCards fStartCard = (FrenchCards) startCard;
-			
-//			for(PlayingCard card : hand) {
-//				
-//			}
 			
 			// loop over hand cards.
 			for (int i = 0; i < hand.size(); i++) {
+				//System.out.println("iterating over card : "+ i);
 				// check if its a french card
-				if (hand.get(i) instanceof FrenchCards) {
-					FrenchCards card = (FrenchCards) hand.get(i);
-					
-					boolean normalVsNormal = checkNormalVsNormalCard(fStartCard, card);
-					if(normalVsNormal) {
-						return true;
-					}
-
-				}
-				else {
-					// card is a joker and we can return true
-					//System.out.println("Joker!");
+				if(hand.get(i).playable(startCard)) {
 					return true;
 				}
+				
 			}
 			// if all iterations over hand loop were unsuccesfull we return false;
 			return false;
-		}
+		
 
 		
-		
-		
-	}
-
-	private static boolean checkNormalVsNormalCard(FrenchCards fStartCard, FrenchCards card) {
-
-		//System.out.println(card.getSuit() + "\t" + card.getRank());
-		
-		//  check if suit are the same. 
-		if(fStartCard.getSuit().equals(card.getSuit())) {
-			if(fStartCard.getRank().equals(Rank.JACK) || card.getRank().equals(Rank.JACK)) {
-				// one of the two cards is a jack. and they are both of the same Suit. so not allowed
-				return false;
-			}else {
-				// both are not jacks. so card can be played on starting card which has the same suit.
-				return true;
-			}
-			
-		}else if(fStartCard.getRank().equals(card.getRank())) {
-			// if cards are the same rank, they can be played on each other so we return true;
-			return true;
-		}else if(fStartCard.getRank().equals(Rank.JACK) && (!(fStartCard.getSuit().equals(card.getSuit())))) {
-			// if starting card is a jack, and our card is not the suit of the jack, we return true;
-			return true;
-		}
-		
-		
-		return false;
 		
 		
 	}
@@ -148,7 +109,8 @@ public class Main {
 	}
 
 	private static void printDeck(ArrayList<PlayingCard> cards) {
-		
+		System.out.println("Size of deck : "+ cards.size());
+
 		for(int i = 0 ; i < cards.size(); i++) {
 			PlayingCard currentCard = cards.get(i);
 			if(currentCard instanceof FrenchCards) {
@@ -175,20 +137,10 @@ public class Main {
 		}
 		
 		// adding 3 jokers
-//		for(int i = 0; i < 3; i++) {
-//			card = new JokerCard();
-//			cards.add(card);
-//		}
-		
-		
-		// ff random kaart maken
-		//PlayingCard lastCard = new FrenchCards(Suit.CLUBS, Rank.ACE);
-		//cards.add(card);
-		
-		
-		//PlayingCard beginKaart = null;
-		//card.playable(beginKaart);
-		
+		for(int i = 0; i < 3; i++) {
+			card = new JokerCard();
+			cards.add(card);
+		}
 	}
 
 }
