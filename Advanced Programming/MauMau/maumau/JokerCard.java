@@ -11,5 +11,10 @@ public class JokerCard implements PlayingCard {
 	public boolean playable(PlayingCard kaartOpSpel) {
 		return true;
 	}
+
+	@Override
+	public boolean canMoveAgain() {
+		return true;
+	}
 	
 }

@@ -3,7 +3,9 @@ package maumau;
 public interface PlayingCard {
 
 	
-	public boolean playable(PlayingCard lastCard);
+	boolean playable(PlayingCard lastCard);
+	
+	boolean canMoveAgain();
 	
 	//public String getSuit();
 	

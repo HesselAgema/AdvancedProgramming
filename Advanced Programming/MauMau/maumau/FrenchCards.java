@@ -4,6 +4,7 @@ import maumau.FrenchCards.Rank;
 
 public class FrenchCards implements PlayingCard {
 
+	Main main;
 	Card card;
 	
 	enum Suit{
@@ -50,10 +51,10 @@ public class FrenchCards implements PlayingCard {
 			return true;
 		} else {
 			FrenchCards kaartOpSpel = (FrenchCards) cardOnDeck;
-
+			
 			// check if suit are the same.
-			if (kaartOpSpel.getSuit().equals(card.suit.toString())) {
-				if (kaartOpSpel.getRank().equals(Rank.JACK) || card.rank.toString().equals(Rank.JACK)) {
+			if (kaartOpSpel.getSuit().equals(card.suit)) {
+				if (kaartOpSpel.getRank().equals(Rank.JACK)) {
 					// one of the two cards is a jack. and they are both of the same Suit. so not
 					// allowed
 					return false;
@@ -63,21 +64,27 @@ public class FrenchCards implements PlayingCard {
 					return true;
 				}
 
-			} else if (kaartOpSpel.getRank().equals(card.rank.toString())) {
+			} else if (kaartOpSpel.getRank().equals(card.rank)) {
 				// if cards are the same rank, they can be played on each other so we return
 				// true;
 				return true;
-			} else if (kaartOpSpel.getRank().equals(Rank.JACK)
-					&& (!(kaartOpSpel.getSuit().equals(card.suit.toString())))) {
-				// if starting card is a jack, and our card is not the suit of the jack, we
-				// return true;
-				return true;
-			} else if (card.rank.toString().equals(Rank.JACK)
-					&& (!(kaartOpSpel.getSuit().equals(card.suit.toString())))) {
-				// if card in hand is a jack and not of the same suit. we can play it
-				return true;
+			} else if (!(kaartOpSpel.getRank().equals(card.rank) && kaartOpSpel.getSuit().equals(card.suit))) {
+					// als en rank en suit anders is, check dan hieronder of kaartOpSpel een Jack is.
+					if(kaartOpSpel.getRank().equals(Rank.JACK) && !(kaartOpSpel.getSuit().equals(card.suit))) {
+						return true;
+					}else {
+						return false;
+					}
+			//	A playing card must not be playable on a card with a different rank and suit.
+			//	○ but must be playable on a Jack of a different suit.
 
-			}
+			} 
+//			else if (card.rank.toString().equals(Rank.JACK)
+//					&& (!(kaartOpSpel.getSuit().equals(card.suit.toString())))) {
+//				// if card in hand is a jack and not of the same suit. we can play it
+//				return true;
+//
+//			}
 
 			return false;
 
@@ -85,12 +92,34 @@ public class FrenchCards implements PlayingCard {
 
 	}
 
-	public String getSuit() {
-		return card.suit.toString();
+	public Suit getSuit() {
+		return card.suit;
 	}
 	
-	public String getRank() {
-		return card.rank.toString();
+	public Rank getRank() {
+		return card.rank;
+	}
+
+	@Override
+	public boolean canMoveAgain() {
+		
+		Rank rank = card.rank;
+		Suit suit = card.suit;
+//		System.out.println(suit);
+//		System.out.println(rank);
+		if(rank.equals(Rank.SEVEN)) {
+			// if rank is a 7, we can move again
+			return true;
+		}else if(rank.equals(Rank.KING)){
+			// if rank is a king, we can move again
+			return true;
+		}else if(rank.equals(Rank.EIGHT) && main.NUM_PLAYERS == 2) {
+			// if rank is an 8, and game is with 2 players, the player can move again since we skip the 2nd player's turn.
+			return true;
+		}
+		
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
