@@ -12,106 +12,82 @@ import maumau.FrenchCards.Suit;
 public class PlayMauMauTest {
 
 	
+
 	@Test
-	void testPlayable() {
-		
-		PlayingCard Hearts_Jack = new FrenchCards(Suit.HEARTS, Rank.JACK);
-		PlayingCard Hearts_Ace = new FrenchCards(Suit.HEARTS, Rank.ACE);
-			
-		// test if certain suit can be played on certain suit
-		// hearts on hearts.
-		assertTrue(Hearts_Jack.playable(Hearts_Ace));
-		
-		// but 2 cannot be played on 1, since card1 is then a jack with the same suit. 
-		assertFalse(Hearts_Ace.playable(Hearts_Jack));
-		
-//		PlayingCard Diamonds_Jack = new FrenchCards(Suit.DIAMONDS, Rank.JACK);
-//		assertTrue(Hearts_Ace.playable(Diamonds_Jack));
-	}
-	
-	@Test
-	void playDifferentRankSameSuit() {
+	void playSameSuitDifferentRank() {
+		PlayingCard Hearts_Two = new FrenchCards(Suit.HEARTS, Rank.TWO);
 		PlayingCard Hearts_Ten = new FrenchCards(Suit.HEARTS, Rank.TEN);
-		PlayingCard Hearts_Two = new FrenchCards(Suit.HEARTS, Rank.TWO);
 		
-		assertTrue(Hearts_Ten.playable(Hearts_Two));
+		assertTrue(Hearts_Two.playable(Hearts_Ten));
+
 	}
 	
 	@Test
-	void playJackDifferentRankSameSuit() {
-		PlayingCard Hearts_Jack = new FrenchCards(Suit.HEARTS, Rank.JACK);
+	void playSameSuitDifferentRankButJack() {
 		PlayingCard Hearts_Two = new FrenchCards(Suit.HEARTS, Rank.TWO);
+		PlayingCard Hearts_Jack = new FrenchCards(Suit.HEARTS, Rank.JACK);
 		
 		assertFalse(Hearts_Two.playable(Hearts_Jack));
-		// suit is same so cant be played on jack of same suit.	
+
 	}
 	
 	@Test
-	void testSameRankOnRank() {
-		PlayingCard Hearts_Ten = new FrenchCards(Suit.HEARTS, Rank.TEN);
+	void playSameRank() {
+		PlayingCard Spades_Five = new FrenchCards(Suit.SPADES, Rank.FIVE);
+		PlayingCard Diamonds_Five = new FrenchCards(Suit.DIAMONDS, Rank.FIVE);
+		
+		assertTrue(Spades_Five.playable(Diamonds_Five));
+	}
+	
+	@Test
+	void playDifferentRankDifferentSuit() {
+		PlayingCard Spades_Five = new FrenchCards(Suit.SPADES, Rank.FIVE);
 		PlayingCard Diamonds_Ten = new FrenchCards(Suit.DIAMONDS, Rank.TEN);
 		
-		assertTrue(Hearts_Ten.playable(Diamonds_Ten));
-		
+		assertFalse(Spades_Five.playable(Diamonds_Ten));
 	}
 	
 	@Test
-	void playCardOfBothDifferentRankAndSuit() {
-		PlayingCard Hearts_Jack = new FrenchCards(Suit.HEARTS, Rank.TEN);
-		PlayingCard Diamonds_Nine = new FrenchCards(Suit.DIAMONDS, Rank.NINE);
-		// check if card with different rank and suit can be played on another card.
-		assertFalse(Hearts_Jack.playable(Diamonds_Nine));
-	}
-	
-	
-	
-	
-	
-	
-	
-	@Test
-	void testCardOnJoker() {
-		PlayingCard Joker = new JokerCard();
-		PlayingCard Hearts_Two = new FrenchCards(Suit.HEARTS, Rank.TWO);
-		
-		assertTrue(Hearts_Two.playable(Joker));
-		
-	}
-	
-	
-	
-	@Test
-	void playableJackDifferentSuit() {
-		
-		PlayingCard Hearts_Ten = new FrenchCards(Suit.HEARTS, Rank.TEN);
+	void playDifferentRankDifferentSuitOnJack() {
+		PlayingCard Spades_Five = new FrenchCards(Suit.SPADES, Rank.FIVE);
 		PlayingCard Diamonds_Jack = new FrenchCards(Suit.DIAMONDS, Rank.JACK);
 		
-		// check if card with different rank and suit can be played on a jack of a different suit
-		assertTrue(Hearts_Ten.playable(Diamonds_Jack));
-		//must be true;
-		
+		assertTrue(Spades_Five.playable(Diamonds_Jack));
 	}
-	
 	
 	@Test
-	void playDifferentRankAndSuit() {
-		PlayingCard Hearts_Ten = new FrenchCards(Suit.HEARTS, Rank.TEN);
-		PlayingCard Spades_Two = new FrenchCards(Suit.SPADES, Rank.TWO);
-		
-		assertFalse(Hearts_Ten.playable(Spades_Two));
-	}
-	
-	
-	@Test 
-	void jackDifferentSuit() {
-		PlayingCard Hearts_Jack = new FrenchCards(Suit.HEARTS, Rank.JACK);
+	void playJackOnDifferentSuit() {
 		PlayingCard Diamonds_Jack = new FrenchCards(Suit.DIAMONDS, Rank.JACK);
+		PlayingCard Spades_Five = new FrenchCards(Suit.SPADES, Rank.FIVE);
 
-		assertTrue(Hearts_Jack.playable(Diamonds_Jack));
+		assertFalse(Diamonds_Jack.playable(Spades_Five));
 	}
 	
+	@Test
+	void playJackOnSameSuit() {
+		PlayingCard Diamonds_Jack = new FrenchCards(Suit.DIAMONDS, Rank.JACK);
+		PlayingCard Diamonds_Five = new FrenchCards(Suit.DIAMONDS, Rank.FIVE);
+
+		assertTrue(Diamonds_Jack.playable(Diamonds_Five));
+	}
 	
+	@Test
+	void playBothJacks() {
+	    PlayingCard Hearts_Jack = new FrenchCards(Suit.HEARTS, Rank.JACK);
+	    PlayingCard Spades_Jack = new FrenchCards(Suit.SPADES, Rank.JACK);
+	    assertTrue(Hearts_Jack.playable(Spades_Jack));  
+	}
 	
+	@Test
+	void playCardOnJoker() {
+	    PlayingCard Hearts_Jack = new FrenchCards(Suit.HEARTS, Rank.JACK);
+	    PlayingCard Joker = new JokerCard();
+	    
+	    assertTrue(Hearts_Jack.playable(Joker));
+	}
+
+	
+		
 	
 	@Test
 	void testCanMoveAgain() {

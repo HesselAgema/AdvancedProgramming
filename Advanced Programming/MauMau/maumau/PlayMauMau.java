@@ -15,11 +15,12 @@ public class PlayMauMau implements Runnable {
 	
 	//private static ArrayList<PlayingCard> cards;
 	//private static ArrayList<PlayingCard> hand;
-	public final static int NUM_PLAYERS = 1;   
+	public static int NUM_PLAYERS;   
 	private static int NUMBER_OF_GAMES = 10000000;
 	private static int NUMBER_OF_THREADS = 4;
 	private static int gamesPerThread = NUMBER_OF_GAMES/NUMBER_OF_THREADS;
 	private static int gamesPerThread2 = 5000000;
+	private int gamesPerThread3;
 
 	
 	private static final int ONE = 1;
@@ -32,49 +33,44 @@ public class PlayMauMau implements Runnable {
 
 
 	
-	Map<Integer, Integer> results = new HashMap<Integer, Integer>();  
+	int [] results = new int[7];
 	
 
 //	public static void main(String[] args) {
 //		simGame(100000);
 //	}
 	
+	public PlayMauMau(int i, int numberOfPlayers) {
+		gamesPerThread3 = i;
+		NUM_PLAYERS = numberOfPlayers;
+	}
+
+
 	@Override
 	public
 	void run() {
-		results.put(0, 0);
-		results.put(1, 0);
-		results.put(2, 0);
-		results.put(3, 0);
-		results.put(4, 0);
-		results.put(5, 0);
-		results.put(6, 0);
-		results.put(7, 0);
 		
-		simGame(gamesPerThread2);
+		simGame(gamesPerThread3, NUM_PLAYERS);
 		
-		printResults();
+		//printResults();
+		
+		for(int i = 0 ; i < results.length; i++) {
+			double num = ((double)results[i]/gamesPerThread3)*100;
+			System.out.printf("%d cards could be played %.4f percent of the time\n ",i,num);
+		}
 		
 	}
 	
 	
 	private void printResults() {
 		
-		double percentOne = (double) results.get(1)/gamesPerThread2;
-		System.out.printf(" %.3f \n ", percentOne);
-		System.out.printf("%d cards could be laid %.3f percent of the time\n", 0, ((double) results.get(0)/gamesPerThread2)*100);
-		System.out.printf("%d cards could be laid %.3f percent of the time\n", 1, ((double) results.get(1)/gamesPerThread2)*100);
-		System.out.printf("%d cards could be laid %.3f percent of the time\n", 2, ((double) results.get(2)/gamesPerThread2)*100);
-		System.out.printf("%d cards could be laid %.3f percent of the time\n", 3, ((double) results.get(3)/gamesPerThread2)*100);
-		System.out.printf("%d cards could be laid %.3f percent of the time\n", 4, ((double) results.get(4)/gamesPerThread2)*100);
-		System.out.printf("%d cards could be laid %.3f percent of the time\n", 5, ((double) results.get(5)/gamesPerThread2)*100);
-		System.out.printf("%d cards could be laid %.3f percent of the time\n", 6, ((double) results.get(6)/gamesPerThread2)*100);
-		System.out.printf("%d cards could be laid %.6f percent of the time\n", 7, ((double) results.get(7)/gamesPerThread2)*100);
-
+		
 }
+	
+	
 
 
-	public void simGame(int numOfGames) {
+	public void simGame(int numOfGames, int numPlayers) {
 		System.out.printf("Simulating %d games!\n", numOfGames);
 		Deck deckHandler = new Deck();
 		ArrayList<PlayingCard> hand = new ArrayList<PlayingCard>();
@@ -85,65 +81,21 @@ public class PlayMauMau implements Runnable {
 			deckHandler.createDeck();
 
 			deckHandler.shuffleDeck();
-			hand = deckHandler.dealToPlayers(NUM_PLAYERS);
-
-
-			//cards = deckHandler.getCards();
+			hand = deckHandler.dealToPlayers(numPlayers);
 
 			PlayingCard startCard = deckHandler.getFirstCard();
-
-			//hand = deckHandler.getHand();
-			//deckHandler.printDeck(hand);
-
-			boolean ableToMove = AbleToMove(startCard, hand);
-			if(ableToMove) {
-				numberOfSucces++;
-			}
 			
 			
+			int num = numCardsCanPlay(startCard,hand, numPlayers);		
 			
-			
-			
-			int num = numCardsCanPlay(startCard,hand);
-			//System.out.println(num);
-			
-			
-			if(num == ONE) {
-				results.replace(ONE, results.get(ONE) + 1);
-			}else if(num == TWO) {
-				results.replace(TWO, results.get(TWO) + 1);
-			}else if(num == THREE) {
-				results.replace(THREE, results.get(THREE) + 1);
-			}else if(num == FOUR) {
-				results.replace(FOUR, results.get(FOUR) + 1);
-			}else if(num == FIVE) {
-				results.replace(FIVE, results.get(FIVE) + 1);
-			}else if(num == SIX) {
-				results.replace(SIX, results.get(SIX) + 1);
-			}else if(num == SEVEN) {
-				results.replace(SEVEN, results.get(SEVEN) + 1);
-			}else if(num == 0) {
-				results.replace(0, results.get(0) + 1);
+			for(int j = 0 ; j < results.length; j++) {
+				if(num == j) {
+					results[j] = results[j] +1;
+				}
 			}
 
 			
-		}
-		
-		//System.out.println(numberOfSucces);
-		double percentCannot = (numSims - numberOfSucces);
-		System.out.printf("%.3f percent \n", (percentCannot/numSims)*100);
-		
-		
-		// complete deel
-		
-
-		//printFirstCard(deckHandler.getFirstCard());
-		//deckHandler.printDeck(hand);
-				
-//		int value = results.get(1);
-//		System.out.println("Value is!!! "+value);
-//		printChances(num);
-//		System.out.println(num);
+		}	
 		
 	}
 	
@@ -169,7 +121,7 @@ public class PlayMauMau implements Runnable {
 
 	
 	
-	private static int numCardsCanPlay(PlayingCard startCard, ArrayList<PlayingCard> hand) {
+	private static int numCardsCanPlay(PlayingCard startCard, ArrayList<PlayingCard> hand, int numPlayers) {
 		
 		int num= 0;
 		int highestNum = 0;
@@ -177,13 +129,13 @@ public class PlayMauMau implements Runnable {
 			if(hand.get(i).playable(startCard)) {
 				//num++;
 				num = 1;
-				if(hand.get(i).canMoveAgain()) {
+				if(hand.get(i).canMoveAgain(numPlayers)) {
 					PlayingCard newStartCard = hand.get(i);
 					ArrayList<PlayingCard> newHand = new ArrayList<>(hand);
 					
 					//ArrayList<PlayingCard> newHand = (ArrayList<PlayingCard>) hand.clone();
 					newHand.remove(i);
-					num += numCardsCanPlay(newStartCard, newHand);
+					num += numCardsCanPlay(newStartCard, newHand, numPlayers);
 				} // if was playable on startCard but cant move again. Update possible highestNumber.
 				if(num > highestNum) {
 					highestNum = num;
@@ -201,6 +153,10 @@ public class PlayMauMau implements Runnable {
 		}else {
 			System.out.println("JOKER is the first card!!!");
 		}		
+	}
+	
+	public int[] getResults() {
+		return results;
 	}
 
 

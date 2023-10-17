@@ -13,7 +13,7 @@ public class JokerCard implements PlayingCard {
 	}
 
 	@Override
-	public boolean canMoveAgain() {
+	public boolean canMoveAgain(int numberOfPlayers) {
 		return false;
 	}
 	
