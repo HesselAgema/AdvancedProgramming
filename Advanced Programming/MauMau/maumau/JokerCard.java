@@ -14,7 +14,7 @@ public class JokerCard implements PlayingCard {
 
 	@Override
 	public boolean canMoveAgain() {
-		return true;
+		return false;
 	}
 	
 }

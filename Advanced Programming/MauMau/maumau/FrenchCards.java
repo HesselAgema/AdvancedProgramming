@@ -1,10 +1,9 @@
 package maumau;
 
-import maumau.FrenchCards.Rank;
 
 public class FrenchCards implements PlayingCard {
 
-	Main main;
+	PlayMauMau playMauMau;
 	Card card;
 	
 	enum Suit{
@@ -51,8 +50,8 @@ public class FrenchCards implements PlayingCard {
 			return true;
 		} else {
 			FrenchCards kaartOpSpel = (FrenchCards) cardOnDeck;
-			
 			// check if suit are the same.
+			
 			if (kaartOpSpel.getSuit().equals(card.suit)) {
 				if (kaartOpSpel.getRank().equals(Rank.JACK)) {
 					// one of the two cards is a jack. and they are both of the same Suit. so not
@@ -113,7 +112,7 @@ public class FrenchCards implements PlayingCard {
 		}else if(rank.equals(Rank.KING)){
 			// if rank is a king, we can move again
 			return true;
-		}else if(rank.equals(Rank.EIGHT) && main.NUM_PLAYERS == 2) {
+		}else if(rank.equals(Rank.EIGHT) && playMauMau.NUM_PLAYERS == 2) {
 			// if rank is an 8, and game is with 2 players, the player can move again since we skip the 2nd player's turn.
 			return true;
 		}
